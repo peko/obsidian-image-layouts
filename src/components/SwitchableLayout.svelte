@@ -64,6 +64,14 @@
 {/if}
 
 <style>
+  /* Set on the codeblock container by utils/drop-images while an image is
+     dragged over it. */
+  :global(.image-layouts-drag-over) {
+    outline: 2px dashed var(--interactive-accent);
+    outline-offset: 2px;
+    border-radius: 6px;
+    background-color: var(--background-modifier-hover);
+  }
   .switchable-layout {
     position: relative;
   }

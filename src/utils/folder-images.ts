@@ -2,7 +2,7 @@ import { TFile, TFolder, normalizePath } from "obsidian";
 import type ImageLayoutsPlugin from "../main";
 import type { ReadyImageLink } from "./images";
 
-const IMAGE_EXTENSIONS = new Set([
+export const IMAGE_EXTENSIONS = new Set([
   "avif",
   "bmp",
   "gif",

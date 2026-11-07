@@ -4,6 +4,7 @@ import SwitchableLayout from "../components/SwitchableLayout.svelte";
 import type { LayoutBlockOptions, PickerChoice } from "../interfaces";
 import type ImageLayoutsPlugin from "../main";
 import { collectBlockImages } from "../utils/block-images";
+import { attachImageDropHandler } from "../utils/drop-images";
 import { parseFrontMatterBlock } from "../utils/front-matter";
 import { normalizeDescriptions } from "../utils/options";
 import { resolveOverlayMode } from "../utils/overlay";
@@ -28,6 +29,7 @@ export function renderLegacyMasonryLayoutComponent(
   plugin: ImageLayoutsPlugin,
   columns: number,
 ) {
+  attachImageDropHandler(plugin, ctx, parent, source);
   const m = parseFrontMatterBlock<LayoutBlockOptions>(source);
   const readyImages = collectBlockImages(m.data, m.body, ctx, plugin);
   const wrapper = new SwitchableLayout({
