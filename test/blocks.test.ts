@@ -1,5 +1,6 @@
 import { expect, test } from "vitest";
 import {
+  appendImageLines,
   buildLayoutBlock,
   parseMasonryLayoutName,
   replaceFenceLayout,
@@ -144,4 +145,15 @@ test("updateLayoutInBlockSource ignores keys inside block scalars", () => {
   expect(updateLayoutInBlockSource(source, { type: "custom" })).toBe(
     "---\ncaption: |\n  grid: sketch\n  layout: moodboard\nlayout: custom\ngrid: |\n  A A B\n  A A C\n---\n![[a.jpg]]\n",
   );
+});
+
+test("appendImageLines adds links after the body", () => {
+  expect(appendImageLines("", ["![[a.png]]"])).toBe("![[a.png]]\n");
+  expect(appendImageLines("---\nlayout: a\n---\n![[x.png]]", ["![[a.png]]", "![[b.png]]"])).toBe(
+    "---\nlayout: a\n---\n![[x.png]]\n![[a.png]]\n![[b.png]]\n",
+  );
+  expect(appendImageLines("---\nlayout: a\n---\n", ["![](https://e.com/i.png)"])).toBe(
+    "---\nlayout: a\n---\n![](https://e.com/i.png)\n",
+  );
+  expect(appendImageLines("![[x.png]]\n", [])).toBe("![[x.png]]\n");
 });

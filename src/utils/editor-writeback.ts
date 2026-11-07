@@ -75,3 +75,21 @@ export function renameFenceLayout(
   );
   return true;
 }
+
+// Whether writeBlockSource would be able to edit the block rendered into
+// `parent` right now. Lets callers bail out before doing side effects (like
+// copying dropped files into the vault) that would be wasted otherwise.
+export function canWriteBlockSource(
+  plugin: ImageLayoutsPlugin,
+  ctx: MarkdownPostProcessorContext,
+  parent: HTMLElement,
+): boolean {
+  const editor = editorForBlock(plugin, ctx);
+  const info = ctx.getSectionInfo(parent);
+  return (
+    !!editor &&
+    !!info &&
+    OPENING_FENCE.test(editor.getLine(info.lineStart)) &&
+    CLOSING_FENCE.test(editor.getLine(info.lineEnd))
+  );
+}

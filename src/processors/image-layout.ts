@@ -21,6 +21,7 @@ import {
   updateLayoutInBlockSource,
 } from "../utils/blocks";
 import { parseCustomGrid } from "../utils/custom-grid";
+import { attachImageDropHandler } from "../utils/drop-images";
 import { writeBlockSource } from "../utils/editor-writeback";
 import { parseFrontMatterBlock } from "../utils/front-matter";
 import { normalizeAlign, normalizeDescriptions } from "../utils/options";
@@ -45,6 +46,7 @@ export function renderImageLayoutComponent(
   ctx: MarkdownPostProcessorContext,
   plugin: ImageLayoutsPlugin,
 ) {
+  attachImageDropHandler(plugin, ctx, parent, source);
   const m = parseFrontMatterBlock<ImageLayoutBlockOptions>(source);
   const readyImages = collectBlockImages(m.data, m.body, ctx, plugin);
   const descriptions = normalizeDescriptions(m.data?.descriptions);

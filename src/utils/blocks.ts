@@ -102,3 +102,14 @@ export const buildLayoutBlock = (
   const fence = "`".repeat(Math.max(3, longestRun + 1));
   return `${fence}image-layout\n${inner}${fence}\n`;
 };
+
+// Appends image link lines to the end of a block's raw source (after the
+// body, never inside the frontmatter). Everything already there is kept as
+// is; only a missing trailing newline is added before the new lines.
+export const appendImageLines = (source: string, lines: string[]): string => {
+  if (lines.length === 0) {
+    return source;
+  }
+  const base = source === "" || source.endsWith("\n") ? source : `${source}\n`;
+  return `${base}${lines.join("\n")}\n`;
+};

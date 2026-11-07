@@ -10,6 +10,7 @@ import {
 } from "../interfaces";
 import type ImageLayoutsPlugin from "../main";
 import { collectBlockImages } from "../utils/block-images";
+import { attachImageDropHandler } from "../utils/drop-images";
 import { renameFenceLayout } from "../utils/editor-writeback";
 import { parseFrontMatterBlock } from "../utils/front-matter";
 import { normalizeAlign, normalizeDescriptions } from "../utils/options";
@@ -84,6 +85,7 @@ export function renderLegacyLayoutComponent(
   // and the picker must not mark `single` as current for those blocks.
   fenceLayout: string = layout,
 ) {
+  attachImageDropHandler(plugin, ctx, parent, source);
   const m = parseFrontMatterBlock<LayoutBlockOptions>(source);
   const readyImages = collectBlockImages(m.data, m.body, ctx, plugin);
 
